@@ -1,0 +1,46 @@
+import java.util.Scanner;
+import java.lang.String;
+public class BankAccount {
+    private int accountNumber;
+    private String accountHolderName;
+    private double balance=0;
+    void setname(int acc_num,String name){
+        accountNumber=acc_num;
+        accountHolderName=name;
+    }
+     void getname(){
+         System.out.println("Initally Balance 0.00\nAccount Number is:"+accountNumber +"\nName is:"+accountHolderName);
+     }
+    void Deposite(int amount){
+        if(amount>0){
+            balance+=amount;
+            System.out.println("Successfully Deposite\n balance is: "+balance);
+        }
+        else System.out.println("Sorry Cannot Deposite");
+    }
+    void Deposite(double amount2){
+        if(amount2>0){
+            balance+=amount2;
+            System.out.println("Successfully Deposite\n balance is: "+balance);
+        }
+        else System.out.println("Sorry Cannot Deposite");
+    }
+    public static void main(String[] args) {
+
+        System.out.println("Hello Sir/Madam Enter Your Account Number and Name :");
+        Scanner ob=new Scanner(System.in);
+        int acc_num=ob.nextInt();
+        ob.nextLine();
+        String name=ob.nextLine();
+
+        BankAccount p1=new BankAccount();
+        p1.setname(acc_num,name);
+        p1.getname();
+        System.out.println("Enter Amount in Integer Value To Deposit:");
+        int amount=ob.nextInt();
+        p1.Deposite(amount);
+        System.out.println("Enter Amount in Floating value To Deposit:");
+        double amount2= ob.nextDouble();
+        p1.Deposite(amount2);
+    }
+}
