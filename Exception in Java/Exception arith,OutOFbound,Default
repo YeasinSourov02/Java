@@ -1,0 +1,33 @@
+import java.io.*; 
+public class demo{
+    public static void main (String[] args) { 
+      
+        int i=2;
+        int j=0;
+        int nums[]=new int[5];
+        String str=null;
+        
+       try{
+          System.out.println(str.length());
+         j=8/i; 
+         System.out.println(nums[1]);
+          System.out.println(nums[5]);
+          
+          
+          
+         
+       }
+          catch(ArithmeticException e){
+            System.out.println("cannot divide by zero");
+            System.out.println(e);
+            
+          }
+           catch(ArrayIndexOutOfBoundsException e){
+           System.out.println("You are out of index");
+    } 
+    catch(Exception e){
+      System.out.println("Something Wrong "+e);
+      
+    }
+} 
+}
