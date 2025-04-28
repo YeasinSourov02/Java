@@ -1,0 +1,45 @@
+// Abstract class representing a generic payment method
+abstract class Payment {
+    public abstract void makePayment(double amount);
+}
+
+// Concrete class for Credit Card payment
+class CreditCardPayment extends Payment {
+    @Override
+    public void makePayment(double amount) {
+        System.out.println("Processing credit card payment of $" + amount);
+        // Credit card-specific logic (e.g., card verification, transaction handling)
+    }
+}
+
+// Concrete class for PayPal payment
+class PayPalPayment extends Payment {
+    @Override
+    public void makePayment(double amount) {
+        System.out.println("Processing PayPal payment of $" + amount);
+        // PayPal-specific logic (e.g., authentication, transaction handling)
+    }
+}
+
+// Concrete class for Bank Transfer payment
+class BankTransferPayment extends Payment {
+    @Override
+    public void makePayment(double amount) {
+        System.out.println("Processing bank transfer payment of $" + amount);
+        // Bank transfer-specific logic (e.g., verifying account details, transaction handling)
+    }
+}
+
+// Main class to test payment system
+public class PaymentSystem {
+    public static void main(String[] args) {
+        Payment payment1 = new CreditCardPayment();
+        payment1.makePayment(100.00);
+
+        Payment payment2 = new PayPalPayment();
+        payment2.makePayment(50.00);
+
+        Payment payment3 = new BankTransferPayment();
+        payment3.makePayment(200.00);
+    }
+}
