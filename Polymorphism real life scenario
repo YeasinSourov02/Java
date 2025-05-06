@@ -1,0 +1,79 @@
+// Parent class
+abstract class Product {
+    String name;
+    double price;
+
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    // Abstract method to be overridden by subclasses
+    abstract void displayProductInfo();
+}
+
+// Child class 1 - Electronics
+class Electronics extends Product {
+    int warrantyPeriod;
+
+    public Electronics(String name, double price, int warrantyPeriod) {
+        super(name, price);
+        this.warrantyPeriod = warrantyPeriod;
+    }
+
+    @Override
+    void displayProductInfo() {
+        System.out.println("Electronics: " + name + ", Price: $" + price + ", Warranty: " + warrantyPeriod + " years");
+    }
+}
+
+// Child class 2 - Clothing
+class Clothing extends Product {
+    String size;
+    String material;
+
+    public Clothing(String name, double price, String size, String material) {
+        super(name, price);
+        this.size = size;
+        this.material = material;
+    }
+
+    @Override
+    void displayProductInfo() {
+        System.out.println("Clothing: " + name + ", Price: $" + price + ", Size: " + size + ", Material: " + material);
+    }
+}
+
+// Child class 3 - Books
+class Book extends Product {
+    String author;
+    String genre;
+
+    public Book(String name, double price, String author, String genre) {
+        super(name, price);
+        this.author = author;
+        this.genre = genre;
+    }
+
+    @Override
+    void displayProductInfo() {
+        System.out.println("Book: " + name + ", Price: $" + price + ", Author: " + author + ", Genre: " + genre);
+    }
+}
+
+// Main class to test polymorphism
+public class Main {
+    public static void main(String[] args) {
+        Product p1 = new Electronics("Smartphone", 799.99, 2);
+        Product p2 = new Clothing("Jacket", 99.99, "M", "Leather");
+        Product p3 = new Book("Effective Java", 49.99, "Joshua Bloch", "Programming");
+
+        // Polymorphic behavior: Parent reference holding child objects
+        Product[] inventory = { p1, p2, p3 };
+
+        System.out.println("E-Commerce Inventory:");
+        for (Product p : inventory) {
+            p.displayProductInfo(); // Calls overridden method dynamically
+        }
+    }
+}
