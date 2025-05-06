@@ -1,0 +1,68 @@
+// Step 1: Define Custom Exceptions
+class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
+}
+
+class InvalidPinException extends Exception {
+    public InvalidPinException(String message) {
+        super(message);
+    }
+}
+
+class WithdrawalLimitExceededException extends Exception {
+    public WithdrawalLimitExceededException(String message) {
+        super(message);
+    }
+}
+
+// Step 2: ATM Class with Exception Handling
+class ATM {
+    private int correctPIN = 1234;  // Fixed PIN
+    private double balance;
+    private int failedAttempts = 0;
+    private static final double MAX_WITHDRAWAL = 1000;
+
+    public ATM(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public void authenticate(int enteredPIN) throws InvalidPinException {
+        if (enteredPIN != correctPIN) {
+            failedAttempts++;
+            if (failedAttempts >= 3) {
+                throw new InvalidPinException("Account locked due to multiple wrong PIN entries!");
+            }
+            throw new InvalidPinException("Incorrect PIN. Attempt " + failedAttempts + " of 3.");
+        }
+        failedAttempts = 0; // Reset on correct entry
+    }
+
+    public void withdraw(double amount) throws InsufficientFundsException, WithdrawalLimitExceededException {
+        if (amount > MAX_WITHDRAWAL) {
+            throw new WithdrawalLimitExceededException("Exceeded max withdrawal limit of $" + MAX_WITHDRAWAL);
+        }
+        if (amount > balance) {
+            throw new InsufficientFundsException("Insufficient funds! Available balance: $" + balance);
+        }
+        balance -= amount;
+        System.out.println("Withdrawal successful. Remaining balance: $" + balance);
+    }
+}
+
+// Step 3: Testing the ATM System
+public class Main {
+    public static void main(String[] args) {
+        ATM atm = new ATM(500);
+
+        try {
+            atm.authenticate(1111);  // Incorrect PIN
+            atm.authenticate(1234);  // Correct PIN
+            atm.withdraw(1200);      // Exceeds withdrawal limit
+            atm.withdraw(600);       // Insufficient funds
+        } catch (InvalidPinException | InsufficientFundsException | WithdrawalLimitExceededException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
