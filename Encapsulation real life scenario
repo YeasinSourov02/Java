@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class PatientRecord {
+    private String patientName;
+    private int patientID;
+    private String diagnosis;
+    private List<String> treatmentHistory;  // Stores all updates securely
+
+    public PatientRecord(String name, int id, String diagnosis) {
+        this.patientName = name;
+        this.patientID = id;
+        this.diagnosis = diagnosis;
+        this.treatmentHistory = new ArrayList<>();
+        this.treatmentHistory.add("Initial Diagnosis: " + diagnosis);
+    }
+
+    // Only authorized access is allowed to update treatment
+    public void addTreatment(String doctorName, String treatment) {
+        if (doctorName != null && !doctorName.isEmpty()) {
+            treatmentHistory.add("Doctor: " + doctorName + " | Treatment: " + treatment);
+            System.out.println("Treatment added by " + doctorName);
+        } else {
+            System.out.println("Unauthorized attempt to modify record!");
+        }
+    }
+
+    // Only allows viewing records, no direct modification
+    public List<String> getTreatmentHistory() {
+        return new ArrayList<>(treatmentHistory); // Returns a copy to prevent direct modification
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public int getPatientID() {
+        return patientID;
+    }
+}
+
+public class HospitalSystem {
+    public static void main(String[] args) {
+        // Creating a new patient record
+        PatientRecord patient = new PatientRecord("John Doe", 1024, "Diabetes");
+
+        // Authorized doctor updates record
+        patient.addTreatment("Dr. Smith", "Prescribed insulin therapy");
+
+        // Unauthorized attempt (fails)
+        patient.addTreatment("", "Change diagnosis to flu");
+
+        // Viewing the history securely
+        System.out.println("\nMedical History for " + patient.getPatientName() + ":");
+        for (String record : patient.getTreatmentHistory()) {
+            System.out.println(record);
+        }
+    }
+}
