@@ -1,0 +1,108 @@
+// Step 1: Interface for Book Actions (Abstraction)
+interface LibraryActions {
+    void displayInfo();
+}
+
+// Step 2: Base Class (Encapsulation & Inheritance)
+abstract class Book implements LibraryActions {
+    private String title;
+    private String author;
+
+    // Constructor
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    // Getters (Encapsulation)
+    public String getTitle() { return title; }
+    public String getAuthor() { return author; }
+
+    // Common method to display book info
+    public void displayInfo() {
+        System.out.println("Title: " + title + ", Author: " + author);
+    }
+}
+
+// Step 3: Subclasses (Polymorphism & Inheritance)
+class EBook extends Book {
+    private String fileFormat;
+
+    public EBook(String title, String author, String fileFormat) {
+        super(title, author);
+        this.fileFormat = fileFormat;
+    }
+
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Format: " + fileFormat);
+    }
+}
+
+class PrintedBook extends Book {
+    private int pageCount;
+
+    public PrintedBook(String title, String author, int pageCount) {
+        super(title, author);
+        this.pageCount = pageCount;
+    }
+
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Pages: " + pageCount);
+    }
+}
+
+// Step 4: File Handling & Exception Management
+import java.io.*;
+
+class Library {
+    public static void saveBook(Book book) {
+        try {
+            FileWriter fw = new FileWriter("books.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(book.getTitle() + " by " + book.getAuthor() + "\n");
+            bw.close();
+            System.out.println("Book saved to file.");
+        } catch (IOException e) {
+            System.out.println("Error saving book.");
+            e.printStackTrace(); // Exception Handling
+        }
+    }
+
+    public static void readBooks() {
+        try {
+            FileReader fr = new FileReader("books.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            System.out.println("Error reading file.");
+        }
+    }
+}
+
+// Step 5: Main Method
+public class LibrarySystem {
+    public static void main(String[] args) {
+        Book ebook = new EBook("The Java Handbook", "John Doe", "PDF");
+        Book printedBook = new PrintedBook("Java Fundamentals", "Jane Smith", 450);
+
+        ebook.displayInfo();
+        printedBook.displayInfo();
+
+        // File Handling - Save Books
+        Library.saveBook(ebook);
+        Library.saveBook(printedBook);
+
+        // Read Stored Books
+        Library.readBooks();
+    }
+}
